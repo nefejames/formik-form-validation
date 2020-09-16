@@ -66,4 +66,9 @@ $border-radius: 4px;
     font-size: 1rem;
     margin-top: 0.3rem;
   }
+
+  .disabled-btn {
+    cursor: not-allowed;
+    background: rgba($primary-color, 0.8);
+  }
 }

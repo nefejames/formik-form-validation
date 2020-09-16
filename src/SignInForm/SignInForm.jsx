@@ -1,15 +1,7 @@
 import React, { Fragment } from "react";
 import { Formik } from "formik";
-import * as Yup from "yup";
 
 import "./SignInForm.scss";
-
-const signInSchema = Yup.object().shape({
-  email: Yup.string().email().required("Email is required"),
-  password: Yup.string()
-    .required("Password is required")
-    .min(6, "Password is too short - should be 6 chars minimum"),
-});
 
 const initialValues = {
   email: "",
@@ -20,10 +12,29 @@ const SignInForm = () => {
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={signInSchema}
+    validate = {values => {
+      let errors = {}
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i
+
+      if(!values.email){
+        errors.email = "Requiredsssss"
+      } else if(!regex.test(values.email)){
+        errors.email = "Invalid Email"
+      }
+
+      if(!values.password){
+        errors.password = "Required"
+      } else if(values.password.length < 4){
+        errors.password = "Password too short"
+      }
+
+      return errors
+    }}
       onSubmit={(values) => {
         console.log(values);
+       
       }}
+      
     >
       {(formik) => {
         const {
@@ -33,6 +44,8 @@ const SignInForm = () => {
           errors,
           touched,
           handleBlur,
+          dirty,
+          isValid
         } = formik;
         return (
           <Fragment>
@@ -75,7 +88,10 @@ const SignInForm = () => {
                   )}
                 </div>
 
-                <button type="submit">Sign In</button>
+                <button type="submit" 
+                className={isValid ? "" : "disabled-btn"}
+               >
+                  Sign In</button>
               </form>
             </div>
           </Fragment>
