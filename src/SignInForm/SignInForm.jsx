@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Formik } from "formik";
 
 import "./SignInForm.scss";
@@ -17,7 +17,7 @@ const SignInForm = () => {
       const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i
 
       if(!values.email){
-        errors.email = "Requiredsssss"
+        errors.email = "Required"
       } else if(!regex.test(values.email)){
         errors.email = "Invalid Email"
       }
@@ -32,9 +32,7 @@ const SignInForm = () => {
     }}
       onSubmit={(values) => {
         console.log(values);
-       
       }}
-      
     >
       {(formik) => {
         const {
@@ -48,7 +46,6 @@ const SignInForm = () => {
           isValid
         } = formik;
         return (
-          <Fragment>
             <div className="container">
               <h1>Sign in to continue</h1>
               <form onSubmit={handleSubmit}>
@@ -90,11 +87,11 @@ const SignInForm = () => {
 
                 <button type="submit" 
                 className={isValid ? "" : "disabled-btn"}
+                disabled={!dirty}
                >
                   Sign In</button>
               </form>
             </div>
-          </Fragment>
         );
       }}
     </Formik>
